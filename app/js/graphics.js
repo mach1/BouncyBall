@@ -4,7 +4,6 @@ define(["object-pool", "controls"], function(objectPool, controls) {
 	function init() {
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext('2d');
-		controls.init(canvas);
 	}
 
 	function start() {
@@ -12,26 +11,37 @@ define(["object-pool", "controls"], function(objectPool, controls) {
 	}
 
 	function clear() {
-		context.clearRect(0, 0, 500, 400);
+		context.clearRect(0, 0, 800, 600);
     context.save();
 	}
 
 	function drawObjects() {
-		var objects = objectPool.getList();
-		for (var i = 0; i < objects.length; i++) {
-			objects[i].draw(context);
-		}
+		objectPool.getList().forEach(function(object) {
+			object.draw(context);
+		});
+	}
+
+	function moveObjects() {
+		objectPool.getList().forEach(function(object) {
+			object.move();
+		});
 	}
 
 	function animate() {
 		clear();
+		moveObjects();
 		drawObjects();
 		context.restore();
 		requestAnimationFrame(animate);
 	}
 
+	function getCanvas() {
+		return canvas;
+	}
+
 	return {
 		init : init,
-		start : start
+		start : start,
+		canvas : canvas
 	}
 });

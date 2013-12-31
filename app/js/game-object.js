@@ -4,5 +4,7 @@ define([], function() {
 		this.y = y;
 	}
 
+  GameObject.prototype.move = function() {};
+
 	return GameObject;
 });
