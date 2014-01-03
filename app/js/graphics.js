@@ -1,17 +1,18 @@
-define(["object-pool", "controls"], function(objectPool, controls) {
-	var canvas, context;
+define(["object-pool", "controls", "json!../config/config.json"],
+	function(objectPool, controls, config) {
+	var canvas, context, width, height;
 
 	function init() {
 		canvas = document.getElementById('canvas');
 		context = canvas.getContext('2d');
-	}
-
-	function start() {
-		animate();
+		width = window.innerWidth;
+		height = window.innerHeight;
+		context.canvas.width  = width
+  	context.canvas.height = height;
 	}
 
 	function clear() {
-		context.clearRect(0, 0, 800, 600);
+		context.clearRect(0, 0, width, height);
     context.save();
 	}
 
@@ -21,18 +22,10 @@ define(["object-pool", "controls"], function(objectPool, controls) {
 		});
 	}
 
-	function moveObjects() {
-		objectPool.getList().forEach(function(object) {
-			object.move();
-		});
-	}
-
 	function animate() {
 		clear();
-		moveObjects();
 		drawObjects();
 		context.restore();
-		requestAnimationFrame(animate);
 	}
 
 	function getCanvas() {
@@ -41,7 +34,7 @@ define(["object-pool", "controls"], function(objectPool, controls) {
 
 	return {
 		init : init,
-		start : start,
-		canvas : canvas
+		getCanvas : getCanvas,
+		animate : animate
 	}
 });

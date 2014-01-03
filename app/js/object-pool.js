@@ -27,5 +27,5 @@ define(['line'], function(Line) {
 		put 		: put,
 		addLine : addLine,
 		remove  : remove
-	}
+	};
 });

@@ -71,6 +71,7 @@ module.exports = function(grunt) {
                     '<%= watch.js.files %>',
                     '<%= watch.json.files %>',
                     base + '/css/**/*.css',
+                    base + '/config/**/*.json',
                     '**/*.html'
                 ]
             }

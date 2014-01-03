@@ -2,7 +2,7 @@
   "name": "BouncyBall",
   "version": "0.0.1",
   "dependencies": {
-    "requirejs": "~2.1.9"
+    "requirejs": "~2.1.9",
+    "requirejs-plugins": "~1.0.2"
   }
 }
-

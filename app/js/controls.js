@@ -5,6 +5,14 @@ define(["object-pool"], function(objectPool) {
 	var graphics;
 	var slingshot;
 
+	function init(injectedGraphics) {
+		graphics = injectedGraphics;
+		mouseCanvas = graphics.getCanvas();
+		mouseCanvas.onmousemove = mouseMove;
+    mouseCanvas.onmousedown = mouseDown;
+    mouseCanvas.onmouseup = mouseUp;
+	}
+
 	function getMousePosition(event) {
 		return {
 	  	x : event.pageX - canvas.offsetLeft,
@@ -21,15 +29,21 @@ define(["object-pool"], function(objectPool) {
 
 	function mouseDown(event) {
 		var mousePosition = getMousePosition(event);
-		var objects = objectPool.getList();
-		var touchedObjects = objects.filter(function(object) {
-			return object.touches(mousePosition.x, mousePosition.y);
-		});
+		var touchedObjects = getObjectsTouchedByMouse(mousePosition);
 
 		if (touchedObjects.length) {
 			draggedObject = touchedObjects[0];
-			createSlingshot(draggedObject.x, draggedObject.y, mousePosition.x, mousePosition.y);
+			draggedObject.velocity.x = 0;
+			draggedObject.velocity.y = 0;
+			createSlingshot(draggedObject.position.x, draggedObject.position.y, mousePosition.x, mousePosition.y);
 		}
+	}
+
+	function getObjectsTouchedByMouse(mousePosition) {
+		var objects = objectPool.getList();
+		return objects.filter(function(object) {
+			return object.touches(mousePosition.x, mousePosition.y);
+		});
 	}
 
 	function createSlingshot(x1, y1, x2, y2) {
@@ -40,17 +54,10 @@ define(["object-pool"], function(objectPool) {
 		var mousePosition = getMousePosition(event);
 		objectPool.remove(slingshot);
 		slingshot = null;
-		draggedObject.velocity.x = (draggedObject.x - mousePosition.x) / 10;
-		draggedObject.velocity.y = (draggedObject.y - mousePosition.y) / 10;
+		draggedObject.velocity.x = (draggedObject.position.x - mousePosition.x) / 10;
+		draggedObject.velocity.y = (draggedObject.position.y - mousePosition.y) / 10;
 	}
 
-	function init(injectedGraphics) {
-		graphics = injectedGraphics;
-		canvas.onmousemove = mouseMove;
-    canvas.onmousedown = mouseDown;
-    canvas.onmouseup = mouseUp;
-    mouseCanvas = canvas;
-	}
 
 	return {
 		init : init

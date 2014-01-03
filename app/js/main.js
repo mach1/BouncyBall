@@ -1,5 +1,9 @@
 require.config({
-    baseUrl: "js"
+  paths : {
+    json : 'vendor/json',
+    text : 'vendor/text'
+  },
+  baseUrl: 'js'
 });
 
 require(['controller'], function(controller) {

@@ -3,6 +3,7 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
     overflow: hidden;
+    margin: 0;
 }
 
 .browsehappy {
@@ -10,8 +11,4 @@ body {
     background: #ccc;
     color: #000;
     padding: 0.2em 0;
-}
-
-#canvas {
-    border : 1px solid black;
 }
